@@ -5,11 +5,17 @@ use App\Http\Controllers\FeeController;
 use App\Http\Controllers\FeeInvoicesController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuizzeController;
 use App\Http\Controllers\ReceiptStudentController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\GraduatedController;
+use App\Http\Controllers\PaymentStudentController;
 use App\Http\Controllers\ProcessingFeeController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\QuizzController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -86,8 +92,21 @@ Route::group(
         Route::resource('ProcessingFee', ProcessingFeeController::class);
 
 
+        Route::resource('Payment_students', PaymentStudentController::class);
+
+
+        Route::resource('Quizzes', QuizzeController::class);
+
+        Route::resource('questions', QuestionController::class);
+
+
 
         Route::resource('Graduated', GraduatedController::class);
+
+        Route::resource('Attendance', AttendanceController::class);
+
+
+        Route::resource('subjects', SubjectController::class);
 
 
         Route::post('upload_attachments', [StudentsController::class, "upload_attachments"]);

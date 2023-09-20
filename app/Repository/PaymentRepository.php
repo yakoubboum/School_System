@@ -7,6 +7,7 @@ use App\Models\FundAccount;
 use App\Models\PaymentStudent;
 use App\Models\Student;
 use App\Models\StudentAccount;
+use App\Models\Students;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -21,7 +22,7 @@ class PaymentRepository implements PaymentRepositoryInterface
 
     public function show($id)
     {
-        $student = Student::findorfail($id);
+        $student = Students::findorfail($id);
         return view('pages.Payment.add',compact('student'));
     }
 
@@ -58,6 +59,14 @@ class PaymentRepository implements PaymentRepositoryInterface
 
             // حفظ البيانات في جدول حساب الطلاب
             $students_accounts = new StudentAccount();
+
+            $student=Students::findOrfail($request->student_id);
+
+
+            $students_accounts->Grade_id=$student->Grade_id;
+            $students_accounts->Classroom_id=$student->Classroom_id;
+
+
             $students_accounts->date = date('Y-m-d');
             $students_accounts->type = 'payment';
             $students_accounts->student_id = $request->student_id;

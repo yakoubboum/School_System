@@ -58,7 +58,7 @@
 
                                     <div class="form-group col">
                                         <label for="inputState">الصف الدراسي</label>
-                                        <select name="Class_id" class="custom-select"></select>
+                                        <select name="Classroom_id" class="custom-select"></select>
                                     </div>
 
 
@@ -85,26 +85,5 @@
 @section('js')
     @toastr_js
     @toastr_render
-    <script>
-        $(document).ready(function () {
-            $('select[name="Grade_id"]').on('change', function () {
-                var Grade_id = $(this).val();
-                if (Grade_id) {
-                    $.ajax({
-                        url: "{{ URL::to('classes') }}/" + Grade_id,
-                        type: "GET",
-                        dataType: "json",
-                        success: function (data) {
-                            $('select[name="Class_id"]').empty();
-                            $.each(data, function (key, value) {
-                                $('select[name="Class_id"]').append('<option value="' + key + '">' + value + '</option>');
-                            });
-                        },
-                    });
-                } else {
-                    console.log('AJAX load did not work');
-                }
-            });
-        });
-    </script>
+
 @endsection

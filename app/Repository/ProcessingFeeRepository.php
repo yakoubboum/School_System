@@ -48,6 +48,13 @@ class ProcessingFeeRepository implements ProcessingFeeRepositoryInterface
 
             // حفظ البيانات في جدول حساب الطلاب
             $students_accounts = new StudentAccount();
+
+            $student=Students::findOrfail($request->student_id);
+
+
+            $students_accounts->Grade_id=$student->Grade_id;
+            $students_accounts->Classroom_id=$student->Classroom_id;
+
             $students_accounts->date = date('Y-m-d');
             $students_accounts->type = 'ProcessingFee';
             $students_accounts->student_id = $request->student_id;

@@ -124,9 +124,9 @@
                             <li> <a href="{{route('FeesInvoices.index')}}">FeesInvoices</a> </li>
 
                             <li> <a href="{{route('receipt_students.index')}}">paid Invoices </a> </li>
-                            
+
                             <li> <a href="{{route('ProcessingFee.index')}}">delete Invoice</a> </li>
-                            {{-- <li> <a href="{{route('Payment_students.index')}}">سندت الصرف</a> </li> --}}
+                            <li> <a href="{{route('Payment_students.index')}}">سندات الصرف</a> </li>
                         </ul>
                     </li>
 
@@ -138,38 +138,33 @@
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Attendance-icon" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="fontawesome-icon.html">font Awesome</a> </li>
-                            <li> <a href="themify-icons.html">Themify icons</a> </li>
-                            <li> <a href="weather-icon.html">Weather icons</a> </li>
+                            <li> <a href="{{route('Attendance.index')}}">قائمة الطلاب</a> </li>
                         </ul>
                     </li>
 
                     <!-- Exams-->
                     <li>
-                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#Exams-icon">
-                            <div class="pull-left"><i class="fas fa-book-open"></i><span class="right-nav-text">{{trans('main_trans.Exams')}}</span></div>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#Subjects">
+                            <div class="pull-left"><i class="fas fa-book-open"></i><span class="right-nav-text">subjects</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
-                        <ul id="Exams-icon" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="fontawesome-icon.html">font Awesome</a> </li>
-                            <li> <a href="themify-icons.html">Themify icons</a> </li>
-                            <li> <a href="weather-icon.html">Weather icons</a> </li>
+                        <ul id="Subjects" class="collapse" data-parent="#sidebarnav">
+                            <li> <a href="{{route('subjects.index')}}">subjects </a> </li>
                         </ul>
                     </li>
 
 
                     <!-- library-->
                     <li>
-                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#library-icon">
-                            <div class="pull-left"><i class="fas fa-book"></i><span class="right-nav-text">{{trans('main_trans.library')}}</span></div>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#Exams-icon">
+                            <div class="pull-left"><i class="fas fa-book-open"></i><span class="right-nav-text">الاختبارات</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
-                        <ul id="library-icon" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="fontawesome-icon.html">font Awesome</a> </li>
-                            <li> <a href="themify-icons.html">Themify icons</a> </li>
-                            <li> <a href="weather-icon.html">Weather icons</a> </li>
+                        <ul id="Exams-icon" class="collapse" data-parent="#sidebarnav">
+                            <li> <a href="{{route('Quizzes.index')}}">قائمة الاختبارات</a> </li>
+                            <li> <a href="{{route('questions.index')}}">قائمة الاسئلة</a> </li>
                         </ul>
                     </li>
 

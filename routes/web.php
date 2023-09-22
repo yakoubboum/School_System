@@ -14,8 +14,8 @@ use App\Http\Controllers\GraduatedController;
 use App\Http\Controllers\PaymentStudentController;
 use App\Http\Controllers\ProcessingFeeController;
 use App\Http\Controllers\StudentsController;
-use App\Http\Controllers\QuizzController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\OnlineClasseController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -98,6 +98,8 @@ Route::group(
         Route::resource('Quizzes', QuizzeController::class);
 
         Route::resource('questions', QuestionController::class);
+
+        Route::resource('online_classes', OnlineClasseController::class);
 
 
 

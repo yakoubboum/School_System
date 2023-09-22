@@ -17,7 +17,7 @@ trait AttachFilesTrait
     {
         $exists = Storage::disk('upload_attachments')->exists('library/'.$name);
 
-        
+
 
         if($exists)
         {

@@ -4,6 +4,7 @@ use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\FeeInvoicesController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizzeController;
@@ -66,7 +67,7 @@ Route::group(
 
 
 
-
+        Route::resource('library', LibraryController::class);
 
 
         Route::resource('Teachers', TeacherController::class);

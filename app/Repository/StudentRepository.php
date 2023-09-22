@@ -177,7 +177,7 @@ class StudentRepository implements StudentRepositoryInterface
     {
         // Delete img in server disk
         Storage::disk('upload_attachments')->delete('students/' . $request->student_name . '/' . $request->filename);
-
+        
         // Delete in data
         image::where('id', $request->id)->where('filename', $request->filename)->delete();
         toastr()->error(trans('messages.Delete'));
@@ -185,5 +185,5 @@ class StudentRepository implements StudentRepositoryInterface
     }
 
 
-    
+
 }

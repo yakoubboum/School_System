@@ -71,40 +71,65 @@
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Teachers-menu">
                             <div class="pull-left"><i class="fas fa-chalkboard-teacher"></i></i><span
-                                    class="right-nav-text">{{trans('main_trans.Teachers')}}</span></div>
+                                    class="right-nav-text">{{ trans('main_trans.Teachers') }}</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Teachers-menu" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="/Teachers">{{trans('main_trans.List_Teachers')}}</a> </li>
+                            <li> <a href="/Teachers">{{ trans('main_trans.List_Teachers') }}</a> </li>
                         </ul>
                     </li>
 
                     <!-- menu font icon-->
                     <li>
-                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#students-menu"><i class="fas fa-user-graduate"></i>{{trans('main_trans.students')}}<div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div></a>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#students-menu"><i
+                                class="fas fa-user-graduate"></i>{{ trans('main_trans.students') }}<div
+                                class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
                         <ul id="students-menu" class="collapse">
                             <li>
-                                <a href="javascript:void(0);" data-toggle="collapse" data-target="#Student_information">{{trans('main_trans.Student_information')}}<div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div></a>
+                                <a href="javascript:void(0);" data-toggle="collapse"
+                                    data-target="#Student_information">{{ trans('main_trans.Student_information') }}
+                                    <div class="pull-right"><i class="ti-plus"></i></div>
+                                    <div class="clearfix"></div>
+                                </a>
                                 <ul id="Student_information" class="collapse">
-                                    <li> <a href="{{route('Students.create')}}">{{trans('main_trans.add_student')}}</a></li>
-                                    <li> <a href="{{route('Students.index')}}">{{trans('main_trans.list_students')}}</a></li>
+                                    <li> <a
+                                            href="{{ route('Students.create') }}">{{ trans('main_trans.add_student') }}</a>
+                                    </li>
+                                    <li> <a
+                                            href="{{ route('Students.index') }}">{{ trans('main_trans.list_students') }}</a>
+                                    </li>
                                 </ul>
                             </li>
 
                             <li>
-                                <a href="javascript:void(0);" data-toggle="collapse" data-target="#Students_upgrade">{{trans('main_trans.Students_Promotions')}}<div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div></a>
+                                <a href="javascript:void(0);" data-toggle="collapse"
+                                    data-target="#Students_upgrade">{{ trans('main_trans.Students_Promotions') }}<div
+                                        class="pull-right"><i class="ti-plus"></i></div>
+                                    <div class="clearfix"></div>
+                                </a>
                                 <ul id="Students_upgrade" class="collapse">
-                                    <li> <a href="/Promotion">{{trans('main_trans.add_Promotion')}}</a></li>
-                                    <li> <a href="/Promotion/create">{{trans('main_trans.list_Promotions')}}</a> </li>
+                                    <li> <a href="/Promotion">{{ trans('main_trans.add_Promotion') }}</a></li>
+                                    <li> <a href="/Promotion/create">{{ trans('main_trans.list_Promotions') }}</a>
+                                    </li>
                                 </ul>
                             </li>
 
                             <li>
-                                <a href="javascript:void(0);" data-toggle="collapse" data-target="#Graduate students">{{trans('main_trans.Graduate_students')}}<div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div></a>
+                                <a href="javascript:void(0);" data-toggle="collapse"
+                                    data-target="#Graduate students">{{ trans('main_trans.Graduate_students') }}<div
+                                        class="pull-right"><i class="ti-plus"></i></div>
+                                    <div class="clearfix"></div>
+                                </a>
                                 <ul id="Graduate students" class="collapse">
-                                    <li> <a href="{{route('Graduated.create')}}">{{trans('main_trans.add_Graduate')}}</a> </li>
-                                    <li> <a href="{{route('Graduated.index')}}">{{trans('main_trans.list_Graduate')}}</a> </li>
+                                    <li> <a
+                                            href="{{ route('Graduated.create') }}">{{ trans('main_trans.add_Graduate') }}</a>
+                                    </li>
+                                    <li> <a
+                                            href="{{ route('Graduated.index') }}">{{ trans('main_trans.list_Graduate') }}</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -115,42 +140,44 @@
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Accounts-menu">
                             <div class="pull-left"><i class="fas fa-money-bill-wave-alt"></i><span
-                                    class="right-nav-text">{{trans('main_trans.Accounts')}}</span></div>
+                                    class="right-nav-text">{{ trans('main_trans.Accounts') }}</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Accounts-menu" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="{{route('Fees.index')}}">Fees</a> </li>
-                            <li> <a href="{{route('FeesInvoices.index')}}">FeesInvoices</a> </li>
+                            <li> <a href="{{ route('Fees.index') }}">Fees</a> </li>
+                            <li> <a href="{{ route('FeesInvoices.index') }}">FeesInvoices</a> </li>
 
-                            <li> <a href="{{route('receipt_students.index')}}">paid Invoices </a> </li>
+                            <li> <a href="{{ route('receipt_students.index') }}">paid Invoices </a> </li>
 
-                            <li> <a href="{{route('ProcessingFee.index')}}">delete Invoice</a> </li>
-                            <li> <a href="{{route('Payment_students.index')}}">سندات الصرف</a> </li>
+                            <li> <a href="{{ route('ProcessingFee.index') }}">delete Invoice</a> </li>
+                            <li> <a href="{{ route('Payment_students.index') }}">سندات الصرف</a> </li>
                         </ul>
                     </li>
 
                     <!-- Attendance-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Attendance-icon">
-                            <div class="pull-left"><i class="fas fa-calendar-alt"></i><span class="right-nav-text">{{trans('main_trans.Attendance')}}</span></div>
+                            <div class="pull-left"><i class="fas fa-calendar-alt"></i><span
+                                    class="right-nav-text">{{ trans('main_trans.Attendance') }}</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Attendance-icon" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="{{route('Attendance.index')}}">قائمة الطلاب</a> </li>
+                            <li> <a href="{{ route('Attendance.index') }}">قائمة الطلاب</a> </li>
                         </ul>
                     </li>
 
                     <!-- Exams-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Subjects">
-                            <div class="pull-left"><i class="fas fa-book-open"></i><span class="right-nav-text">subjects</span></div>
+                            <div class="pull-left"><i class="fas fa-book-open"></i><span
+                                    class="right-nav-text">subjects</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Subjects" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="{{route('subjects.index')}}">subjects </a> </li>
+                            <li> <a href="{{ route('subjects.index') }}">subjects </a> </li>
                         </ul>
                     </li>
 
@@ -158,13 +185,14 @@
                     <!-- library-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Exams-icon">
-                            <div class="pull-left"><i class="fas fa-book-open"></i><span class="right-nav-text">الاختبارات</span></div>
+                            <div class="pull-left"><i class="fas fa-book-open"></i><span
+                                    class="right-nav-text">الاختبارات</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Exams-icon" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="{{route('Quizzes.index')}}">قائمة الاختبارات</a> </li>
-                            <li> <a href="{{route('questions.index')}}">قائمة الاسئلة</a> </li>
+                            <li> <a href="{{ route('Quizzes.index') }}">قائمة الاختبارات</a> </li>
+                            <li> <a href="{{ route('questions.index') }}">قائمة الاسئلة</a> </li>
                         </ul>
                     </li>
 
@@ -172,13 +200,25 @@
                     <!-- Onlinec lasses-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Onlineclasses-icon">
-                            <div class="pull-left"><i class="fas fa-video"></i><span class="right-nav-text">{{trans('main_trans.Onlineclasses')}}</span></div>
+                            <div class="pull-left"><i class="fas fa-video"></i><span
+                                    class="right-nav-text">{{ trans('main_trans.Onlineclasses') }}</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Onlineclasses-icon" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="{{route('online_classes.index')}}">الاتصال مباشر مع زوم</a> </li>
+                            <li> <a href="{{ route('online_classes.index') }}">الاتصال مباشر مع زوم</a> </li>
                             <li> <a href="themify-icons.html">الاتصال الغير مباشر مع زوم</a> </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#library-icon">
+                            <div class="pull-left"><i class="fas fa-book"></i><span class="right-nav-text">{{trans('main_trans.library')}}</span></div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="library-icon" class="collapse" data-parent="#sidebarnav">
+                            <li> <a href="{{route('library.index')}}">قائمة الكتب</a> </li>
                         </ul>
                     </li>
 
@@ -186,7 +226,8 @@
                     <!-- Settings-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Settings-icon">
-                            <div class="pull-left"><i class="fas fa-cogs"></i><span class="right-nav-text">{{trans('main_trans.Settings')}}</span></div>
+                            <div class="pull-left"><i class="fas fa-cogs"></i><span
+                                    class="right-nav-text">{{ trans('main_trans.Settings') }}</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
@@ -201,7 +242,8 @@
                     <!-- Users-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Users-icon">
-                            <div class="pull-left"><i class="fas fa-users"></i><span class="right-nav-text">{{trans('main_trans.Users')}}</span></div>
+                            <div class="pull-left"><i class="fas fa-users"></i><span
+                                    class="right-nav-text">{{ trans('main_trans.Users') }}</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>

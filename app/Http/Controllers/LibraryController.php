@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\AttachFilesTrait;
 use App\Models\Grade;
 use App\Models\Library;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class LibraryController extends Controller
 {
-
+    use AttachFilesTrait;
 
     public function index()
     {
@@ -22,7 +24,7 @@ class LibraryController extends Controller
         return view('pages.library.create', compact('grades'));
     }
 
-    public function store($request)
+    public function store(Request $request)
     {
         try {
             $books = new Library();
@@ -33,7 +35,7 @@ class LibraryController extends Controller
             $books->section_id = $request->section_id;
             $books->teacher_id = 1;
             $books->save();
-            $this->uploadFile($request, 'file_name');
+            $this->uploadFile($request, 'file_name', 'Library');
 
             toastr()->success(trans('messages.success'));
             return redirect()->route('library.create');
@@ -49,23 +51,28 @@ class LibraryController extends Controller
         return view('pages.library.edit', compact('book', 'grades'));
     }
 
-    public function update($request)
+    public function update(Request $request)
     {
         try {
 
             $book = library::findorFail($request->id);
-            $book->title = $request->title;
+
 
             if ($request->hasfile('file_name')) {
 
-                $this->deleteFile($book->file_name);
+                Storage::disk('upload_attachments')->deleteDirectory('library/'.$book->title);
 
-                $this->uploadFile($request, 'file_name');
+                $this->uploadFile($request, 'file_name', 'Library');
 
                 $file_name_new = $request->file('file_name')->getClientOriginalName();
+
+
                 $book->file_name = $book->file_name !== $file_name_new ? $file_name_new : $book->file_name;
             }
 
+            
+
+            $book->title = $request->title;
             $book->Grade_id = $request->Grade_id;
             $book->classroom_id = $request->Classroom_id;
             $book->section_id = $request->section_id;
@@ -78,16 +85,26 @@ class LibraryController extends Controller
         }
     }
 
-    public function destroy($request)
+    public function destroy(Request $request)
     {
-        $this->deleteFile($request->file_name);
+
+
+
+
+        if (Storage::disk('upload_attachments')->exists('library/'.$request->file_name)) {
+
+            Storage::disk('upload_attachments')->deleteDirectory('library/'.$request->file_name);
+        }
+
+
+
         library::destroy($request->id);
         toastr()->error(trans('messages.Delete'));
         return redirect()->route('library.index');
     }
 
-    public function downloadAttachment($filename)
+    public function downloadAttachment($filename, $folder)
     {
-        return response()->download(public_path('attachments/library/'.$filename));
+        return response()->download(public_path('attachments/Library/' . $folder . '/' . $filename));
     }
 }

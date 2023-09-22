@@ -115,10 +115,14 @@ Route::group(
         Route::post('upload_attachments', [StudentsController::class, "upload_attachments"]);
 
 
+
         Route::post('Delete_attachment', [StudentsController::class, "Delete_attachment"]);
 
 
         Route::get('Download_attachment/{student_name}/{file_name}', [StudentsController::class, "Download_attachment"]);
+
+
+        Route::get('downloadAttachment/{filename}/{folder}', [LibraryController::class, "downloadAttachment"]);
 
 
         // Route::get('Get_classrooms/{id}', [StudentsController::class,"Get_classrooms"]);

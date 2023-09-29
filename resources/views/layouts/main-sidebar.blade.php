@@ -9,7 +9,7 @@
                     <li>
 
 
-                    <li><a href="/dashboard">{{ trans('main_tran.Dashboard') }}</a></li>
+                    <li><a href="/">{{ trans('main_tran.Dashboard') }}</a></li>
 
 
 

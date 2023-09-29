@@ -25,6 +25,12 @@ class GradeController extends Controller
    *
 
    */
+
+   
+
+
+
+
   public function index()
   {
     $Grades=Grade::all();
@@ -61,7 +67,7 @@ class GradeController extends Controller
     $Grade = new Grade();
 
     $Grade->Name = ['en' => $request->Name_en, 'ar' => $request->Name];
-    
+
     $Grade->save();
     toastr()->success(trans('messages.success'));
     return back();

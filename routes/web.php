@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\FeeInvoicesController;
@@ -10,6 +9,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizzeController;
 use App\Http\Controllers\ReceiptStudentController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\GraduatedController;
 use App\Http\Controllers\PaymentStudentController;
@@ -18,24 +18,133 @@ use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\OnlineClasseController;
 use App\Http\Controllers\TeacherController;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Illuminate\Http\Request;
+use App\Http\Controllers\ProfileController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
 
 
-Route::group(['middleware' => ['guest']], function () {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Route::group(['middleware' => ['guest']], function () {
 
     Route::get('/', function () {
-        return view('auth.login');
+        return view('auth.selection');
     });
-});
+
+
+
+
+// Route::get('/', function () {
+//     return view('dashboard');
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', "auth"]
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath','auth']
     ],
     function () {
+
 
 
         Route::resource('grade', GradeController::class);
@@ -59,7 +168,7 @@ Route::group(
         Route::resource('Sections', SectionController::class);
 
 
-        Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware("auth");
+        // Route::get('dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 
@@ -133,24 +242,6 @@ Route::group(
 );
 
 
-
-// Route::view('en/add_parent', "livewire.showform")->name('add_parent');
-// Route::view('en/add_parent', "livewire.showform")->name('add_parent');
-
-
-
-
-
-
-
-Auth::routes();
-
-
-
-
-
-
-
 Route::get('test', function () {
     return view('livewire.test');
 });
@@ -158,6 +249,17 @@ Route::get('test', function () {
 
 
 
+// Route::get('login/{type}', [GradeController::class,'loginform'])->middleware('guest')->name('login.show');
+
+Route::get('login/{type}', function ($type) {
+    return view('auth.login', compact("type"));
+})->name('login.show');
+
+
+
+
+
+// Route::post('login', [LoginController::class, 'login'])->name('login');
 
 
 
@@ -173,11 +275,17 @@ Route::get('test', function () {
 
 
 
-Auth::routes();
 
-Route::group(['middleware' => ['guest']], function () {
 
-    Route::get('/', function () {
-        return view('auth.login');
-    });
-});
+
+
+
+
+
+
+
+
+
+
+
+

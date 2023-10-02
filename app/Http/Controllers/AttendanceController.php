@@ -34,9 +34,9 @@ class AttendanceController extends Controller
         return $this->Attendance->show($id);
     }
 
-    public function edit($id)
+    public function report()
     {
-        //
+        return 1;
     }
 
 

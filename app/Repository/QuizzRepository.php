@@ -9,19 +9,50 @@ use App\Models\Teacher;
 
 class QuizzRepository implements QuizzRepositoryInterface
 {
-
     public function index()
     {
-        $quizzes = Quizze::get();
-        return view('pages.Quizzes.index', compact('quizzes'));
+        $quizzes = Quizze::where('teacher_id', auth()->user()->id)->get();
+
+        if (auth('web')->check()) {
+            return view('pages.Quizzes.index', compact('quizzes'));
+        }
+
+
+
+        if (auth('teacher')->check()) {
+
+            return view('pages.Teachers.dashboard.Quizzes.index', compact('quizzes'));
+        }
     }
 
     public function create()
     {
-        $data['grades'] = Grade::all();
-        $data['subjects'] = Subject::all();
-        $data['teachers'] = Teacher::all();
-        return view('pages.Quizzes.create', $data);
+
+        if (auth('web')->check()) {
+            $data['grades'] = Grade::all();
+            $data['subjects'] = Subject::all();
+            $data['teachers'] = Teacher::all();
+            return view('pages.Quizzes.create', $data);
+        }
+
+
+
+        if (auth('teacher')->check()) {
+
+
+            $teacher=teacher::findOrfail(auth()->user()->id);
+
+            $subject=Subject::where('teacher_id',auth()->user()->id)->first()->name;
+
+            $sections=$teacher->with('Sections')->first();
+
+
+
+
+
+            return view('pages.Teachers.dashboard.Quizzes.create', compact('teacher','subject','sections'));
+
+        }
     }
 
     public function store($request)
@@ -38,8 +69,7 @@ class QuizzRepository implements QuizzRepositoryInterface
             $quizzes->save();
             toastr()->success(trans('messages.success'));
             return redirect()->route('Quizzes.create');
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return redirect()->back()->with(['error' => $e->getMessage()]);
         }
     }

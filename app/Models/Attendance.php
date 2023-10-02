@@ -18,4 +18,18 @@ class Attendance extends Model
         'attendence_date',
         'attendence_status',
     ];
+
+    public function student(){
+        return $this->belongsTo('App\Models\students','student_id');
+    }
+    public function grade(){
+        return $this->belongsTo('App\Models\Grade','grade_id');
+    }
+
+    public function section()
+    {
+        return $this->belongsTo('App\Models\Section', 'section_id');
+    }
+
+
 }

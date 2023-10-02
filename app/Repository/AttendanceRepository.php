@@ -36,27 +36,45 @@ class AttendanceRepository implements AttendanceRepositoryInterface
 
 
 
-            foreach ($request->attendences as $studentid => $attendence) {
+        foreach ($request->attendences as $studentid => $attendence) {
 
-                if ($attendence == 'presence') {
-                    $attendence_status = true;
-                } else if ($attendence == 'absent') {
-                    $attendence_status = false;
-                }
+            if ($attendence == 'presence') {
+                $attendence_status = true;
+            } else if ($attendence == 'absent') {
+                $attendence_status = false;
+            }
 
+            $attendance = Attendance::where('student_id', $studentid)
+            ->where('grade_id', $request->grade_id)
+            ->where('classroom_id', $request->classroom_id)
+            ->where('section_id', $request->section_id)
+            ->where('attendence_date', date('Y-m-d'))
+            ->first();
+
+
+            if ($attendance) {
+                $attendance->attendence_status = $attendence_status;
+                $attendance->save();
+            } else {
+                // Create a new record.
                 Attendance::create([
                     'student_id' => $studentid,
                     'grade_id' => $request->grade_id,
                     'classroom_id' => $request->classroom_id,
                     'section_id' => $request->section_id,
-                    'teacher_id' => 1,  //task for me
+                    'teacher_id' => auth()->user()->id,
                     'attendence_date' => date('Y-m-d'),
                     'attendence_status' => $attendence_status
                 ]);
             }
 
-            toastr()->success(trans('messages.success'));
-            return redirect()->back();
+
+
+
+        }
+
+        toastr()->success(trans('messages.success'));
+        return redirect()->back();
     }
 
     public function update($request)

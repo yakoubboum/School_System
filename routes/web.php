@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\FeeInvoicesController;
@@ -17,13 +18,16 @@ use App\Http\Controllers\ProcessingFeeController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\OnlineClasseController;
+use App\Http\Controllers\teacher\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Models\Teacher;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProfileController;
+use App\Models\Students;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,17 +44,17 @@ use App\Http\Controllers\ProfileController;
 //     return view('welcome');
 // });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+Route::group(['namespace' => 'Auth',
+], function () {
+
+    Route::get('/login/{type}', [LoginController::class, 'loginForm'])->name('login.show');
+
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+    Route::get('/logout/{type}', [LoginController::class, 'logout'])->name('logout');
 });
-
-require __DIR__.'/auth.php';
 
 
 
@@ -107,9 +111,9 @@ require __DIR__.'/auth.php';
 
 // Route::group(['middleware' => ['guest']], function () {
 
-    Route::get('/', function () {
-        return view('auth.selection');
-    });
+Route::get('/', function () {
+    return view('auth.selection');
+})->name('selection');
 
 
 
@@ -120,6 +124,56 @@ require __DIR__.'/auth.php';
 
 
 
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth:student']
+    ],
+    function () {
+
+        //==============================dashboard============================
+        Route::get('/student/dashboard', function () {
+            return view('pages.Students.dashboard.profile');
+        })->name('dashboard.Students');
+    }
+);
+
+
+
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth:teacher']
+    ],
+    function () {
+
+        //==============================dashboard============================
+        Route::get('/teacher/dashboard', function () {
+
+            $sections = Teacher::findOrfail(auth()->user()->id)->Sections()->pluck('section_id');
+
+            $section_number = $sections->count();
+
+            $students_n = Students::whereIn('section_id', $sections)->count();
+
+            return view('pages.Teachers.dashboard.dashboard', compact('section_number', 'students_n'));
+        });
+
+
+
+        Route::group(['namespace' => 'teacher'], function () {
+            //==============================students============================
+            Route::get('student', [StudentController::class, 'index'])->name('student.index');
+
+            Route::get('sections',[StudentController::class, 'sections'])->name('sections.index');
+
+            Route::get('report',[StudentController::class, 'report'])->name('Attendance.report');
+
+            Route::post('report_search',[StudentController::class, 'report_search'])->name('attendance.search');
+
+        });
+    }
+);
 
 
 
@@ -128,7 +182,30 @@ require __DIR__.'/auth.php';
 
 
 
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth:web,student,teacher']
+    ],
+    function () {
 
+
+
+        Route::resource('Attendance', AttendanceController::class);
+
+
+        Route::resource('Quizzes', QuizzeController::class);
+
+        Route::resource('questions', QuestionController::class);
+
+
+        Route::get('Get_classrooms/{id}', [SectionController::class, 'Get_classrooms']);
+
+
+        Route::get('Get_Sections/{id}', [StudentsController::class, "Get_Sections"]);
+
+    }
+);
 
 
 
@@ -141,9 +218,11 @@ require __DIR__.'/auth.php';
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath','auth']
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth']
     ],
     function () {
+
+
 
 
 
@@ -151,7 +230,7 @@ Route::group(
 
         Route::post('grade/store', [GradeController::class, 'store']);
 
-        Route::get('Get_classrooms/{id}', [SectionController::class, 'Get_classrooms']);
+
 
         Route::post('classrooms/store', [ClassroomController::class, "store"]);
 
@@ -168,7 +247,7 @@ Route::group(
         Route::resource('Sections', SectionController::class);
 
 
-        // Route::get('dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::get('dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('home');
 
 
 
@@ -205,9 +284,7 @@ Route::group(
         Route::resource('Payment_students', PaymentStudentController::class);
 
 
-        Route::resource('Quizzes', QuizzeController::class);
 
-        Route::resource('questions', QuestionController::class);
 
         Route::resource('online_classes', OnlineClasseController::class);
 
@@ -215,7 +292,6 @@ Route::group(
 
         Route::resource('Graduated', GraduatedController::class);
 
-        Route::resource('Attendance', AttendanceController::class);
 
 
         Route::resource('subjects', SubjectController::class);
@@ -235,7 +311,6 @@ Route::group(
 
 
         // Route::get('Get_classrooms/{id}', [StudentsController::class,"Get_classrooms"]);
-        Route::get('Get_Sections/{id}', [StudentsController::class, "Get_Sections"]);
 
         Route::get('Get_Price/{id}', [FeeInvoicesController::class, "Get_Price"]);
     }
@@ -251,9 +326,9 @@ Route::get('test', function () {
 
 // Route::get('login/{type}', [GradeController::class,'loginform'])->middleware('guest')->name('login.show');
 
-Route::get('login/{type}', function ($type) {
-    return view('auth.login', compact("type"));
-})->name('login.show');
+// Route::get('login/{type}', function ($type) {
+//     return view('auth.login', compact("type"));
+// })->name('login.show');
 
 
 
@@ -262,27 +337,8 @@ Route::get('login/{type}', function ($type) {
 // Route::post('login', [LoginController::class, 'login'])->name('login');
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// require __DIR__.'\auth.php';
+// require __DIR__.'\student.php';
 
 
 

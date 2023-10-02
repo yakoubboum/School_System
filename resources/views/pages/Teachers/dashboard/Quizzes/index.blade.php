@@ -55,13 +55,23 @@
                                                             data-toggle="modal"
                                                             data-target="#delete_exam{{ $quizze->id }}" title="حذف"><i
                                                             class="fa fa-trash"></i></button>
+                                                    <a href="{{route('Quizzes.show',$quizze->id)}}"
+                                                       class="btn btn-warning btn-sm" title="عرض الاسئلة" role="button" aria-pressed="true"><i
+                                                            class="fa fa-binoculars"></i></a>
+
+                                                    <a href=""
+                                                       class="btn btn-primary btn-sm" title="عرض الطلاب المختبرين" role="button" aria-pressed="true"><i
+                                                            class="fa fa-street-view"></i></a>
+
+
+
                                                 </td>
                                             </tr>
 
                                             <div class="modal fade" id="delete_exam{{$quizze->id}}" tabindex="-1"
                                                  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
-                                                    <form action="{{route('Quizzes.destroy','test')}}" method="post">
+                                                    <form action="{{route('Quizzes.destroy',$quizze->id)}}" method="post">
                                                         {{method_field('delete')}}
                                                         {{csrf_field()}}
                                                         <div class="modal-content">

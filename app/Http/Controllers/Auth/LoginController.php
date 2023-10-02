@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\AuthTrait;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -21,7 +22,7 @@ class LoginController extends Controller
     |
     */
 
-
+    use AuthTrait;
 
     public function __construct()
     {
@@ -39,30 +40,21 @@ class LoginController extends Controller
     {
 
 
-        $guardname = 'web';
-        if ($request->type == 'student') {
-            $guardname = 'student';
-        } elseif ($request->type == 'teacher') {
-            $guardname = 'teacher';
-        } elseif ($request->type == 'parent') {
-            $guardname = 'parent';
+        if (Auth::guard($this->chekGuard($request))->attempt(['email' => $request->email, 'password' => $request->password])) {
+            return $this->redirect($request);
         } else {
-            $guardname = 'web';
+            return redirect()->back()->with('message', 'يوجد خطا في كلمة المرور او اسم المستخدم');
         }
+    }
 
+    public function logout(Request $request,$type)
+    {
+        Auth::guard($type)->logout();
 
+        $request->session()->invalidate();
 
-        if (Auth::guard($guardname)->attempt(['email' => $request->email, 'password' => $request->password])) {
+        $request->session()->regenerateToken();
 
-            if ($request->type == 'student') {
-                return redirect()->intended(RouteServiceProvider::STUDENT);
-            } elseif ($request->type == 'parent') {
-                return redirect()->intended(RouteServiceProvider::PARENT);
-            } elseif ($request->type == 'teacher') {
-                return redirect()->intended(RouteServiceProvider::TEACHER);
-            } else {
-                return redirect()->intended(RouteServiceProvider::HOME);
-            }
-        }
+        return redirect('/');
     }
 }
